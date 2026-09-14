@@ -1,6 +1,11 @@
 asgiref==3.12.1
 Django==6.1.1
+django-filter==26.1
+djangorestframework==3.18.1
+Markdown==3.10.3
+numpy==2.5.2
+pandas==3.0.5
+praat-parselmouth==0.4.7
+python-dateutil==2.9.0.post0
+six==1.17.0
 sqlparse==0.6.0
-praat-parselmouth>=0.4.3
-pandas>=2.0.0
-numpy>=1.24.0

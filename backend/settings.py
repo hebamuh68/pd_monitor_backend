@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'voice_monitor',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,11 +73,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
@@ -124,4 +135,13 @@ MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
+}
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ]
 }
