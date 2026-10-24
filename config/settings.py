@@ -27,11 +27,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Source - https://stackoverflow.com/a/78701276
+# Posted by kelly mweu, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-10-23, License - CC BY-SA 4.0
+
+CORS_ALLOWED_ORIGINS = [
+   # "https://example.com", #use this in production to point to live website
+    # "https://sub.example.com", #use this in production
+    "http://localhost:3000", #default next js on localhost, otherwise 3001
+    "http://127.0.0.1:3000", #still next js development
+]
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'voice_monitor',
+    'drf_spectacular',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,12 +51,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -139,9 +153,5 @@ MAILERS = {
 
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ]
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }

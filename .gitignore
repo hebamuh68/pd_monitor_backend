@@ -3,3 +3,9 @@
 **/.DS_Store
 __pycache__/
 *.pyc
+
+# Local voice dataset (not for public repo)
+voice_monitor/HC_AH/
+
+# Generated OpenAPI schema
+schema.yml
