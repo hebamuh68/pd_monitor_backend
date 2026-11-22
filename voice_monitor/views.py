@@ -7,6 +7,7 @@ from parselmouth.praat import call    # For jitter/shimmer calculations
 import pandas as pd                   # Data manipulation
 import numpy as np                    # Numerical operations
 
+import tempfile
 
 """
 Voice Feature Extraction for Parkinson's Disease Detection
@@ -123,8 +124,13 @@ class VoiceMonitorAPI(APIView):
     
     def post(self, request, format=None):
 
-        self.audio = request.data.get('audio')
-        self.parsed_voice = parselmouth.Sound(self.audio)
+        self.voice = request.FILES['voice']
+
+        with tempfile.NamedTemporaryFile(suffix='.wav') as tmp:
+            for chunk in self.voice.chunks():
+                tmp.write(chunk)
+            tmp.flush()
+            self.parsed_voice = parselmouth.Sound(tmp.name)
 
         views_obj = VoiceMonitorViews(self.parsed_voice)
 
